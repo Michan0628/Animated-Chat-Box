@@ -4,13 +4,13 @@ import './App.css';
 import { motion } from 'framer-motion';
 
 const messages = [
-  { text: 'How do I get better at React?' },
-  { text: 'Just build something!' },
-  { text: 'OK! What should I build?' },
+  { text: 'How do I get a cat?' },
+  { text: 'Just adopt one!' },
+  { text: 'OK! Which shelter should I go?' },
   { text: 'Iono. Just Google it?' },
-  { text: 'Oh! This course looks cool!' },
+  { text: 'Oh! This shelter looks cool!' },
   { text: 'Send me the link?!' },
-  { text: '20ReactApps.com!' },
+  { text: 'www.northtorontocatrescue.com!' },
 ];
 
 export default function App() {

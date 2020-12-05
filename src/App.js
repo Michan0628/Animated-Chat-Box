@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
+import useInterval from '@use-it/interval';
 import './App.css';
 
 const messages = [
@@ -12,17 +13,51 @@ const messages = [
 ];
 
 export default function App() {
+  const [messageToShow, setMessageToShow] = useState(0);
+
+  useInterval(() => {
+    setMessageToShow((messageToShow) => messageToShow + 1);
+  }, 2000);
+
   return (
-    <div className="app">
-      <div className="walkthrough">
+    <div className='app'>
+      <div className='walkthrough'>
         {messages.map((message, index) => {
-          return (
-            <div key={index} className="message">
-              {message.text}
-            </div>
-          );
+          // are we supposed to show typing indicator?
+          if (messageToShow + 1 === index) {
+            return <TypingIndicator key={index}/>
+          }
+
+          // Logic: Are we supposed to show this message?
+          if(index > messageToShow){
+            return <div key={index} />
+          }
+          return <Message key={index} message={message} />;
         })}
       </div>
+    </div>
+  );
+}
+
+function TypingIndicator(){
+  return (
+    <div className="typing is-right is-left">
+      <div className="dots">
+        <div />
+        <div />
+        <div />
+      </div>
+    </div>
+  )
+}
+
+
+function Message({ message }) {
+  return (
+    <div className='message'>
+      <div className='avatar'>🐶</div>
+      <div className='text'>{message.text}</div>
+      <div className='avatar'>🐱</div>
     </div>
   );
 }

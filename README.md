@@ -1,6 +1,6 @@
 # Animated Chat box
 
-This is a animated chat box building by React, javascript and a little bit of css.
+This is a animated chat box building by React, javascript and a little bit of css.\
 [View Demo](https://animated-chat-box.netlify.app/) - [Source Code](https://github.com/Michan0628/Animated-Chat-Box)
 ## Skills used in this app
 

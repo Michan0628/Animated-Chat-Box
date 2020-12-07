@@ -1,9 +1,9 @@
 # Animated Chat box
----
+
 This is a animated chat box building by React, javascript and a little bit of css.
 [View Demo](https://animated-chat-box.netlify.app/) - [Source Code](https://github.com/Michan0628/Animated-Chat-Box)
 ## Skills used in this app
----
+
 ### 1. useState()
 useState is a React Hook that lets you add React state to function components. With Hook, you don't hav to convert function component to a class component anymore.
 You can read more about how to use it on [React Doc](https://overreacted.io/making-setinterval-declarative-with-react-hooks/).

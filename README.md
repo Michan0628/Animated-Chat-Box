@@ -1,68 +1,83 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Animated Chat box
+---
+This is a animated chat box building by React, javascript and a little bit of css.
+View Demo - [Source Code](https://github.com/Michan0628/Animated-Chat-Box)
+## Skills used in this app
+---
+### 1. useState()
+useState is a React Hook that lets you add React state to function components. With Hook, you don't hav to convert function component to a class component anymore.
+You can read more about how to use it on [React Doc](https://overreacted.io/making-setinterval-declarative-with-react-hooks/).
+### 2. useInterval timer
+[useInterval](https://github.com/donavon/use-interval) is a custom React Hook that provides a declarative setInterval.
+```javascript
+//It accepts two parameters:
+useInterval(callback, delay)
+```
+The callback is a function that will be called every delay milliseconds, delay is a number in milliseconds, it can be set to null to pause the interval.
+I used it with useState hook. The number of messageToShow will increment by one in every two seconds. So that the messages are shown one by one: If the index of the message is greater than the state messageToShow, the message will not be shown.
+```javascript
+const [messageToShow, setMessageToShow] = useState(0);
 
-## Available Scripts
+useInterval(() => {
+    setMessageToShow((messageToShow) => messageToShow + 1);
+  }, 2000);
 
-In the project directory, you can run:
+return (
+    <div className='app'>
+      <div className='walkthrough'>
+        {messages.map((message, index) => {
+          const isEven = index % 2 === 0;
+          // When are we supposed to show typing indicator
+          if (messageToShow + 1 === index) {
+            return <TypingIndicator key={index} isEven={isEven} />;
+          }
 
-### `yarn start`
+          // Show the messages one by one
+          if (index > messageToShow) {
+            return <div key={index} />;
+          }
+          return <Message key={index} message={message} />;
+        })}
+      </div>
+    </div>
+  );
+```
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+There are more information about the difference of setInterval and useInterval in [Dan Abramov's blog post](https://overreacted.io/making-setinterval-declarative-with-react-hooks/)
+### 3. Framer Motion API
+[Motion API](https://www.framer.com/api/motion/) is production-ready animation and gesture library.
+In this project, the chat box and typing dots are controlled via the motion component's animate prop. The animate prop accept objects, variant label, or refrence to imperative animation controls.
+The initial is the starting state of the animation, the animate prop is the end state of the animation.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+For this Message component, it starts from scale 0.5, and animate to scale 1.
+```javascript
+function Message({ message }) {
+  return (
+    <motion.div
+      className='message'
+      initial={{ scale: 0.5 }}
+      animate={{ scale: 1 }}
+    >
+      <div className='avatar'>🐶</div>
+      <div className='text'>{message.text}</div>
+      <div className='avatar'>🐱</div>
+    </motion.div>
+  );
+}
+```
+### 4. animation-delay
+The animation-delay CSS property specifies the amount of time to wait from appying the animation to an element before beginning to perform the animation.
+In the project, the three dots are applied to different time of animation delay so that they will bounce at different levels.
+```css
+.dots > div:first-child {
+  animation-delay: 0.1s;
+}
 
-### `yarn test`
+.dots > div:nth-child(2) {
+  animation-delay: 0.2s;
+}
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+.dots > div:last-child {
+  animation-delay: 0.3s;
+}
+```
